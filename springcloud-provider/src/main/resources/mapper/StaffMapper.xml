@@ -1,0 +1,77 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper 可以认为是dao层接口的实现类    namespace 配置对应dao层接口的全路径 *****-->
+<mapper namespace="com.jk.mapper.StaffMapper">
+
+	<select id="queryStaff" resultType="com.jk.model.Staff">
+		select * from t_staff ts,t_dept td,t_position tp where ts.position=tp.pid and ts.dept=td.deptId
+	</select>
+
+	<insert id="addStaff" parameterType="com.jk.model.Staff">
+		insert into t_staff(userName,passWord,position,dept,pay,motto) values(#{userName},123,#{position},#{dept},#{pay},#{motto})
+	</insert>
+
+	<delete id="delStaff">
+		delete from t_staff where id in
+		<foreach collection="idsArr" item="id" close=")" open="(" separator="," >
+			#{id}
+		</foreach>
+	</delete>
+	<!--
+
+
+	<delete id="delStaff">
+		delete from t_user where userId in
+		<foreach collection="array" item="id" close=")" open="(" separator="," >
+			#{id}
+		</foreach>
+	</delete>
+
+	<update id="updateUser">
+		update t_user userName=#{userName},userAge=#{userAge} where userId=#{userId}
+	</update>
+
+实现对应的dao层方法   id 对应dao层接口的方法名称-->
+	<!--<select id="queryCar" resultType="java.util.Map">
+		select * from t_car
+	</select>
+	
+	<insert id="addCar" parameterType="java.lang.String">
+		insert into t_car values(seq_car_id.nextval,#{string})
+	</insert>
+	
+	<delete id="delCarById" parameterType="Integer">
+		delete t_car where carId = #{i}
+	</delete>
+	
+	
+	<update id="updateCarById" parameterType="com.jk.car.pojo.Car">
+		update t_car set carName=#{carName} where carId=#{carId}
+	</update>
+	-->
+	
+	<!-- 
+	
+	<insert id="addUser" parameterType="com.jk.entity.User">
+		keyProperty 设置主键属性    resultType 此字段的返回值类型    order  before 执行sql之前 /after执行在sql之后  
+		<selectKey keyProperty="user_id" resultType="string" order="BEFORE">
+			select lower(sys_guid()) from dual
+		</selectKey>
+		insert into t_user (user_id,username,userpass,addtime) values(#{user_id},#{username},#{userpass},#{addtime})
+	</insert> -->
+
+	<!--<select id="queryStaff" resultType="com.jk.model.User">
+		select * from t_user limit #{ks},#{js}
+	</select>
+	<select id="selectCount" resultType="java.lang.Long">
+		select count(1) from t_user
+	</select>
+	<select id="queryUserById" resultType="com.jk.model.User">
+		select * from t_user where userId=#{userId}
+	</select>
+
+	<insert id="addStaff" useGeneratedKeys="true" keyProperty="userId">
+		insert into t_user(userName,userAge) values(#{userName},#{userAge})
+	</insert>-->
+
+</mapper>
